@@ -18,79 +18,42 @@ describe("App contains two tabs", () => {
 
 describe("Salary Form takes only numbers", () => {
 
-  it("Rejects strings", () => {
+  let formWrapper;
+  let input;
 
-    const formWrapper = shallowMount(SalaryForm, {
+  function enterInputAndFindErrors(value) {
+    input.element.value = value;
+    input.trigger('input');
+    return formWrapper.find("#error-messages");
+  }
+
+  beforeEach(() => {
+    formWrapper = shallowMount(SalaryForm, {
       propsData: {
         name: "employee"
       }
     });
-
-    const input = formWrapper.find("input");
-    input.element.value = 'input';
-    input.trigger('input');
-    formWrapper.find('input[type=submit]').trigger('click');
-
-    const error = formWrapper.find("#error-messages");
-
-    expect(error.exists()).toBeTruthy();
-
+    input = formWrapper.find("input");
   });
 
 
+  it("Rejects strings", () => {
+    const error = enterInputAndFindErrors('input');
+    expect(error.exists()).toBeTruthy();
+  });
 
   it("Rejects negative numbers", () => {
-
-    const formWrapper = shallowMount(SalaryForm, {
-      propsData: {
-        name: "employee"
-      }
-    });
-
-    const input = formWrapper.find("input");
-    input.element.value = -1;
-    input.trigger('input');
-    formWrapper.find('input[type=submit]').trigger('click');
-
-    const error = formWrapper.find("#error-messages");
-
+    const error = enterInputAndFindErrors(-1);
     expect(error.exists()).toBeTruthy();
-
   });
 
-
   it("Accepts integer numbers", () => {
-    const formWrapper = shallowMount(SalaryForm, {
-      propsData: {
-        name: "employee"
-      }
-    });
-
-    const input = formWrapper.find("input");
-    input.element.value = 1;
-    input.trigger('input');
-    formWrapper.find('input[type=submit]').trigger('click');
-
-    const error = formWrapper.find("#error-messages");
-
+    const error = enterInputAndFindErrors(1);
     expect(error.exists()).toBeFalsy();
   });
 
   it("Accepts decimal numbers", () => {
-    const formWrapper = shallowMount(SalaryForm, {
-      propsData: {
-        name: "employee"
-      }
-    });
-
-    const input = formWrapper.find("input");
-    input.element.value = 1.5;
-    input.trigger('input');
-    formWrapper.find('input[type=submit]').trigger('click');
-
-    const error = formWrapper.find("#error-messages");
-
+    const error = enterInputAndFindErrors(1.5);
     expect(error.exists()).toBeFalsy();
   });
-
 });

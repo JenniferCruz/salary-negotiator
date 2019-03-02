@@ -1,6 +1,6 @@
 <template>
     <div v-bind:id="formId">
-        <form @submit.prevent="onSubmit">
+        <form @submit.prevent="onSubmit"  v-if="!submitted">
 
             <div v-if="invalidInput" id="error-messages" class="warning-message">
                 <p>{{ errorMessage }}</p>>
@@ -19,7 +19,7 @@
         data() {
             return {
                 amount: null,
-                // invalidInput: false,
+                submitted: false,
             }
         },
         props: {
@@ -34,7 +34,10 @@
         },
         methods: {
             onSubmit() {
-                // TODO
+                if (! this.invalidInput ) {
+                    this.submitted = true;
+                    // TODO: store value
+                }
             }
         },
         computed: {

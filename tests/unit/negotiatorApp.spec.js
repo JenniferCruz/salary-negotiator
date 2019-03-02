@@ -37,7 +37,6 @@ describe("Salary Form takes only numbers", () => {
     input = formWrapper.find("input");
   });
 
-
   it("Rejects strings", () => {
     const error = enterInputAndFindErrors('input');
     expect(error.exists()).toBeTruthy();
@@ -60,22 +59,47 @@ describe("Salary Form takes only numbers", () => {
 });
 
 describe("Salary Form Submission", () => {
-  it("Hides form on submission", () => {
-    const formWrapper = shallowMount(SalaryForm, {
+
+  let employeeFormWrapper;
+  let input;
+
+  beforeEach(() => {
+    employeeFormWrapper = shallowMount(SalaryForm, {
       propsData: {
         name: "employee"
       }
     });
-    const input = formWrapper.find("input");
+    input = employeeFormWrapper.find("input");
+    input.element.value = 1;
+    input.trigger('input');
+    employeeFormWrapper.find("input[type=submit]").trigger("click");
+  });
+
+  it("Hides form on submission", () => {
+    expect(employeeFormWrapper.find("form").html()).toContain('<!---->');
+  });
+
+  it("Reports employer's submission is pending on employee's submission", () => {
+    const waitingMessage = employeeFormWrapper.find("#submission-message").text();
+    expect(waitingMessage).toContain("waiting");
+    expect(waitingMessage).toContain("employer");
+  });
+
+  it("Reports employee's submission is pending on employer's submission", () => {
+    const formWrapper = shallowMount(SalaryForm, {
+      propsData: {
+        name: "employer"
+      }
+    });
+    input = formWrapper.find("input");
     input.element.value = 1;
     input.trigger('input');
     formWrapper.find("input[type=submit]").trigger("click");
 
-    expect(formWrapper.find("form").html()).toContain('<!---->');
-  });
-
-  // TODO
-  it("Reports employee's submission is pending on employer's submission", () => {
+    const waitingMessage = formWrapper.find("#submission-message").text();
+    expect(waitingMessage).toContain("waiting");
+    expect(waitingMessage).toContain("employee");
 
   });
+
 });

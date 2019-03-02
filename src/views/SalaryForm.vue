@@ -10,6 +10,11 @@
             <input type="submit" value="Submit">
 
         </form>
+
+        <div id="submission-message" v-show="submitted">
+            <h3>Thank you for your submission!</h3>
+            <p>We are waiting for the {{ otherParty }} to submit their form.</p>
+        </div>
     </div>
 </template>
 
@@ -50,6 +55,9 @@
             invalidInput() {
                 const n = (new Number(this.amount)).valueOf();
                 return Number.isNaN(n) || n < 0;
+            },
+            otherParty() {
+                return this.name.toLowerCase() === "employee" ? "employer" : "employee";
             }
         }
     }

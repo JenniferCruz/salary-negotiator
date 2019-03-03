@@ -1,10 +1,10 @@
 import Vue from "vue";
 import NegotiatorApp from "./NegotiatorApp.vue";
-import router from "./router";
+import { store } from "./store";
 
 Vue.config.productionTip = false;
 
 new Vue({
-  router,
-  render: h => h(NegotiatorApp)
+  store,
+  render: h => h(NegotiatorApp),
 }).$mount("#app");

@@ -41,7 +41,7 @@
             onSubmit() {
                 if (! this.invalidInput ) {
                     this.submitted = true;
-                    // TODO: store value
+                    this.$store.commit("updateSalary", { entity: this.name, salary: this.amount})
                 }
             }
         },

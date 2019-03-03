@@ -1,19 +1,21 @@
 <template>
     <div>
         <h1>{{ salariesOverlap ? "Success" : "Failure"}}</h1>
-        <p>Minimum expeced salary {{ employeeMinimum }}</p>
-        <p>Maximum offer {{ employeerMaximum }}</p>
+        <p>Minimum expected salary {{ employeeMinimum }}.</p>
+        <p>Maximum offer {{ employeerMaximum }}.</p>
 s    </div>
 </template>
 
 <script>
     export default {
         name: "NegotiationOutcome",
-        data() {
-            return {
-                employeeMinimum: null,
-                employeerMaximum: null,
-            }
+        computed: {
+            employeeMinimum() {
+                return this.$store.state.employeeMinimum;
+            },
+            employeerMaximum() {
+                return this.$store.state.employerMaximum;
+            },
         },
         methods: {
             salariesOverlap() {

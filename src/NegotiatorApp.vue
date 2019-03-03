@@ -1,25 +1,41 @@
 <template>
     <div id="app">
-        <div id="nav-tabs">
-            <!--TODO: add additional 'employer' path to employer tab -->
-            <router-link to="/" id="employer-tab">Employer</router-link> |
-            <router-link to="/employee" id="employee-tab">Employee</router-link>
+        <ul id="nav-tabs">
+            <li v-for="tab in tabs"
+                v-bind:key="tab"
+                v-bind:class="{selected: tab === currentTab}"
+                v-on:click="currentTab = tab">
+                {{ tab }}
+            </li>
+        </ul>
+
+        <div v-show="currentTab === 'Employee'" class="selected-post">
+            <employee-form :name="currentTab" placeholder="minimum"></employee-form>
         </div>
-        <router-view />
+
+        <div v-show="currentTab === 'Employer'" class="selected-post">
+            <employer-form :name="currentTab" placeholder="maximum"></employer-form>
+        </div>
+
     </div>
 </template>
 
 <script>
+    import SalaryForm from "./views/SalaryForm.vue";
+
     export default {
-        name: "NegotiatorApp"
+        name: "NegotiatorApp",
+        data() {
+            return {
+                tabs: ["Employer", "Employee"],
+                currentTab: "Employer"
+            }
+        },
+        components: {
+            'employer-form': SalaryForm,
+            'employee-form': SalaryForm,
+        }
     }
 </script>
 
-<style scoped>
-
-    .router-link-exact-active {
-        background-color: black;
-        color: white;
-    }
-
-</style>
+<style scoped></style>

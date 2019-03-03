@@ -2,6 +2,7 @@
     <div id="app">
         <ul id="nav-tabs">
             <li v-for="tab in tabs"
+                v-bind:id="tab"
                 v-bind:key="tab"
                 v-bind:class="{selected: tab === currentTab}"
                 v-on:click="currentTab = tab">
@@ -9,11 +10,11 @@
             </li>
         </ul>
 
-        <div v-show="currentTab === 'Employee'" class="selected-post">
+        <div v-show="currentTab === 'Employee'">
             <employee-form :name="currentTab" placeholder="minimum"></employee-form>
         </div>
 
-        <div v-show="currentTab === 'Employer'" class="selected-post">
+        <div v-show="currentTab === 'Employer'">
             <employer-form :name="currentTab" placeholder="maximum"></employer-form>
         </div>
 

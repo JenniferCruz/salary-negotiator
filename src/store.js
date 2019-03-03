@@ -11,6 +11,12 @@ export const store = new Vuex.Store({
     getters: {
         hasCompleteData(state) {
             return state.employeeMinimum !== null && state.employeerMaximum !== null;
+        },
+        employerMaximum(state) {
+            return state.employerMaximum;
+        },
+        employeeMinimum(state) {
+            return state.employeeMinimum;
         }
     },
     mutations: {

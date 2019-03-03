@@ -11,7 +11,7 @@
 
         </form>
 
-        <div id="submission-message" v-show="submitted">
+        <div id="submission-message" v-show="submitted && !hasCompleteData">
             <h3>Thank you for your submission!</h3>
             <p>We are waiting for the {{ otherParty }} to submit their form.</p>
         </div>
@@ -41,7 +41,7 @@
             onSubmit() {
                 if (! this.invalidInput ) {
                     this.submitted = true;
-                    this.$store.commit("updateSalary", { entity: this.name, salary: this.amount})
+                    this.$store.commit("updateSalary", { party: this.name, salary: this.amount})
                 }
             }
         },
@@ -58,6 +58,9 @@
             },
             otherParty() {
                 return this.name.toLowerCase() === "employee" ? "employer" : "employee";
+            },
+            hasCompleteData() {
+                return this.$store.getters.hasCompleteData;
             }
         }
     }

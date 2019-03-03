@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <h1>{{ salariesOverlap ? "Success" : "Failure"}}</h1>
+    <div v-show="hasCompleteData">
+        <h1>{{ negotiationSucceeds ? "Success" : "Failure"}}</h1>
         <p>Minimum expected salary {{ employeeMinimum }}.</p>
         <p>Maximum offer {{ employeerMaximum }}.</p>
-s    </div>
+    </div>
 </template>
 
 <script>
@@ -16,10 +16,11 @@ s    </div>
             employeerMaximum() {
                 return this.$store.state.employerMaximum;
             },
-        },
-        methods: {
-            salariesOverlap() {
-                return this.minimum <= this.maximum
+            hasCompleteData() {
+                return this.$store.getters.hasCompleteData;
+            },
+            negotiationSucceeds() {
+                return this.employeeMinimum <= this.employeerMaximum;
             }
         },
     }

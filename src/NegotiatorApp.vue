@@ -17,11 +17,14 @@
             <employer-form :name="currentTab" placeholder="maximum"></employer-form>
         </div>
 
+        <negotiation-outcome></negotiation-outcome>
+
     </div>
 </template>
 
 <script>
     import SalaryForm from "./views/SalaryForm.vue";
+    import NegotiationOutcome from "./components/NegotiationOutcome.vue"
 
     export default {
         name: "NegotiatorApp",
@@ -34,6 +37,7 @@
         components: {
             'employer-form': SalaryForm,
             'employee-form': SalaryForm,
+            NegotiationOutcome
         }
     }
 </script>

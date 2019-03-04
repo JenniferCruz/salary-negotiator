@@ -69,7 +69,4 @@
 </script>
 
 <style scoped>
-    .salary-form {
-
-    }
 </style>

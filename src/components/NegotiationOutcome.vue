@@ -1,27 +1,33 @@
 <template>
-    <outcome-modal name="negotiation-outcome">
-        <div class="close-button-container">
-            <button @click="$modal.hide('negotiation-outcome')" class="btn btn-link">
-                ❌
+    <div>
+        <outcome-modal name="negotiation-outcome" @before-close="beforeClose" @before-open="beforeOpen">
+            <div class="close-button-container">
+                <button @click="$modal.hide('negotiation-outcome')" class="btn btn-link">
+                    ❌
+                </button>
+            </div>
+            <div class="text-center">
+                <h1>{{ negotiationSucceeds ? "Success" : "Failure"}}</h1>
+                <ul class="list-group list-group-horizontal justify-content-center">
+                    <li v-for="s in salaries" v-bind:id="s" v-bind:key="s.entity" class="list-group-item">
+                        {{ s.text }}
+                        <div v-bind:class="negotiationSucceeds ? 'bg-success ': 'bg-warning'"
+                             class="rounded-circle mx-auto round-div">
+                            {{ s.salary }}
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </outcome-modal>
+
+        <div v-show="negotiationCompleted && modalIsClosed">
+            <h3>Negotiation is ready!</h3>
+            <button @click="$modal.show('negotiation-outcome')" class="btn btn-large btn-outline-success">
+                Show outcome
             </button>
         </div>
-        <div class="text-center">
-            <h1>{{ negotiationSucceeds ? "Success" : "Failure"}}</h1>
-            <!--<p>Minimum expected salary {{ employeeMinimum }}.</p>-->
-            <!--<p>Maximum offer {{ employerMaximum }}.</p>-->
-
-            <ul class="list-group list-group-horizontal justify-content-center">
-                <li v-for="s in salaries" v-bind:id="s" v-bind:key="s.entity" class="list-group-item">
-                    {{ s.text }}
-                    <div v-bind:class="negotiationSucceeds ? 'bg-success ': 'bg-warning'"
-                         class="rounded-circle mx-auto round-div">
-                        {{ s.salary }}
-                    </div>
-                </li>
-            </ul>
-
-        </div>
-    </outcome-modal>
+    </div>
 </template>
 
 <script>
@@ -36,6 +42,11 @@
 
     export default {
         name: "NegotiationOutcome",
+        data() {
+            return {
+                modalIsClosed: true
+            }
+        },
         computed: {
             employeeMinimum() {
                 return new Number(this.$store.getters.employeeMinimum);
@@ -67,8 +78,19 @@
                             text: "Employer's maximum offer"
                         },
                     ]
+            },
+            negotiationCompleted() {
+                return this.$store.getters.hasCompleteData;
             }
         },
+        methods: {
+            beforeClose() {
+                this.modalIsClosed = true;
+            },
+            beforeOpen() {
+                this.modalIsClosed = false;
+            }
+        }
     }
 </script>
 

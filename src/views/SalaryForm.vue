@@ -41,8 +41,10 @@
             onSubmit() {
                 if (! this.invalidInput ) {
                     this.submitted = true;
-                    this.$store.commit("updateSalary", { party: this.name, salary: this.amount})
+                    this.$store.commit("updateSalary", { party: this.name, salary: this.amount});
                 }
+                if (this.hasCompleteData)
+                    this.$modal.show('negotiation-outcome');
             }
         },
         computed: {

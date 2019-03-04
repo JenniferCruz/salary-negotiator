@@ -1,13 +1,15 @@
 <template>
     <outcome-modal name="negotiation-outcome">
         <div class="close-button-container">
-            <button @click="$modal.hide('negotiation-outcome')">
+            <button @click="$modal.hide('negotiation-outcome')" class="btn btn-link">
                 ❌
             </button>
         </div>
-        <h1>{{ negotiationSucceeds ? "Success" : "Failure"}}</h1>
-        <p>Minimum expected salary {{ employeeMinimum }}.</p>
-        <p>Maximum offer {{ employeerMaximum }}.</p>
+        <div class="text-center">
+            <h1>{{ negotiationSucceeds ? "Success" : "Failure"}}</h1>
+            <p>Minimum expected salary {{ employeeMinimum }}.</p>
+            <p>Maximum offer {{ employeerMaximum }}.</p>
+        </div>
     </outcome-modal>
 </template>
 

@@ -1,21 +1,24 @@
 <template>
-    <div id="app">
-        <ul id="nav-tabs">
-            <li v-for="tab in tabs"
-                v-bind:id="tab"
-                v-bind:key="tab"
-                v-bind:class="{selected: tab === currentTab}"
-                v-on:click="currentTab = tab">
-                {{ tab }}
+    <div id="app" class="text-center mt-5">
+        <ul id="nav-tabs" class="nav nav-tabs justify-content-center">
+            <li v-for="tab in tabs" v-bind:id="tab" v-bind:key="tab" class="nav-item">
+                <a href="#"
+                   class="nav-link"
+                   v-bind:class="{active: tab === currentTab}"
+                   v-on:click="currentTab = tab">
+
+                    {{ tab }}
+
+                </a>
             </li>
         </ul>
 
         <div v-show="currentTab === 'Employee'">
-            <employee-form :name="currentTab" placeholder="minimum"></employee-form>
+            <employee-form :name="currentTab" placeholder="enter minimum salary"></employee-form>
         </div>
 
         <div v-show="currentTab === 'Employer'">
-            <employer-form :name="currentTab" placeholder="maximum"></employer-form>
+            <employer-form :name="currentTab" placeholder="enter maximum salary"></employer-form>
         </div>
 
         <negotiation-outcome></negotiation-outcome>
@@ -43,4 +46,10 @@
     }
 </script>
 
-<style scoped></style>
+<style scoped>
+    a {
+        color: black;
+    }
+
+
+</style>

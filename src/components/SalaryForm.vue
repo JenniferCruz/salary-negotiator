@@ -1,8 +1,8 @@
 <template>
-    <div v-bind:id="formId">
+    <div v-bind:id="formId" class="mt-5">
         <form @submit.prevent="onSubmit"  v-if="!submitted">
 
-            <div v-if="invalidInput && this.amount !== null" id="error-messages" class="warning-message">
+            <div v-if="invalidInput && this.amount !== null" id="error-messages" class="alert-warning">
                 <p>{{ errorMessage }}</p>
             </div>
 
@@ -69,9 +69,7 @@
 </script>
 
 <style scoped>
-    .warning-message {
-        background-color: lightpink;
-        color: deeppink;
-        border: 1px solid hotpink;
+    .salary-form {
+
     }
 </style>

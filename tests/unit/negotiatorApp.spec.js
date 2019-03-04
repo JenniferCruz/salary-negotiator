@@ -84,6 +84,11 @@ describe("Salary Form takes only numbers", () => {
     const error = enterInputAndFindErrors(1.5);
     expect(error.exists()).toBeFalsy();
   });
+
+  it("Rejects null values (no user input)", () => {
+    const error = enterInputAndFindErrors(null);
+    expect(error.exists()).toBeTruthy();
+  });
 });
 
 describe("Salary Form Submission", () => {

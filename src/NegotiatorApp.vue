@@ -24,7 +24,7 @@
 </template>
 
 <script>
-    import SalaryForm from "./views/SalaryForm.vue";
+    import SalaryForm from "./components/SalaryForm.vue";
     import NegotiationOutcome from "./components/NegotiationOutcome.vue"
 
     export default {

@@ -1,5 +1,5 @@
 import {shallowMount} from "@vue/test-utils";
-import SalaryForm from "@/views/SalaryForm";
+import SalaryForm from "@/components/SalaryForm";
 
 describe("Salary Form takes only numbers", () => {
 

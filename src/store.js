@@ -10,7 +10,7 @@ export const store = new Vuex.Store({
     },
     getters: {
         hasCompleteData(state) {
-            return state.employeeMinimum !== null && state.employeerMaximum !== null;
+            return state.employeeMinimum !== null && state.employerMaximum !== null;
         },
         employerMaximum(state) {
             return state.employerMaximum;

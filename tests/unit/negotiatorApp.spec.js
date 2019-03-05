@@ -28,7 +28,7 @@ describe("App contains two tabs", () => {
 
 
     // select other tab
-    wrapper.find("#Employee").trigger("click");
+    wrapper.find("#Employee a").trigger("click");
 
     // test change in state
     employerContent = wrapper.findAll("div").at(2);

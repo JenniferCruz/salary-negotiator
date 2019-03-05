@@ -1,11 +1,12 @@
 <template>
     <div>
-        <outcome-modal name="negotiation-outcome" @before-close="beforeClose" @before-open="beforeOpen">
+        <outcome-modal name="negotiation-outcome" @before-close="beforeClose" @before-open="beforeOpen" height="auto">
             <div class="close-button-container">
                 <button @click="$modal.hide('negotiation-outcome')" class="btn btn-link">
                     ❌
                 </button>
             </div>
+
             <div class="text-center">
                 <h1>{{ negotiationSucceeds ? "Success" : "Failure"}}</h1>
                 <ul class="list-group list-group-horizontal justify-content-center">
@@ -17,8 +18,19 @@
                         </div>
                     </li>
                 </ul>
-
             </div>
+
+            <div class="text-center mt-3 p-3 border-top">
+                <div v-if="temperature">
+                    <p>Temperature in London: {{ temperature }}</p>
+                    <sub>from the Open Weather Map</sub>
+                </div>
+                <div v-else>
+                    <p>Loading Current Temperature in London</p>
+                    <div class="spinner-border"></div>
+                </div>
+            </div>
+
         </outcome-modal>
 
         <div v-show="negotiationCompleted && modalIsClosed">
@@ -81,6 +93,9 @@
             },
             negotiationCompleted() {
                 return this.$store.getters.hasCompleteData;
+            },
+            temperature() {
+                return this.$store.getters.London;
             }
         },
         methods: {
@@ -89,7 +104,13 @@
             },
             beforeOpen() {
                 this.modalIsClosed = false;
+            },
+            fetchTemperature() {
+                return this.$store.dispatch("fetchTemperatureInCity", "London")
             }
+        },
+        mounted() {
+            this.fetchTemperature();
         }
     }
 </script>

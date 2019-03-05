@@ -44,7 +44,7 @@
                     this.$store.commit("updateSalary", { party: this.name, salary: this.amount});
                 }
                 if (this.hasCompleteData)
-                    this.$modal.show('negotiation-outcome');
+                    this.$modal.show('outcome-modal');
             }
         },
         computed: {

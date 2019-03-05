@@ -1,4 +1,4 @@
-export default function negotiationOutcome(employer, applicant) {
+export default function negotiationResult(employer, applicant) {
     const max = new Number(employer);
     const min = new Number(applicant);
 
@@ -13,12 +13,12 @@ export default function negotiationOutcome(employer, applicant) {
         ] : [
             {
                 entity: "employee",
-                salary: convertToMoney(max),
+                salary: convertToMoney(min),
                 text: "Employee expects at least"
             },
             {
                 entity: "employer",
-                salary: convertToMoney(min),
+                salary: convertToMoney(max),
                 text: "Employer's maximum offer"
             },
         ]

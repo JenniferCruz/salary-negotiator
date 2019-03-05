@@ -7,12 +7,12 @@
                 </button>
             </div>
 
-            <div class="text-center">
-                <h1>{{ negotiationSucceeds ? "Success" : "Failure"}}</h1>
+            <div v-if="outcome" class="text-center">
+                <h1>{{ outcome.succeded ? "Success" : "Failure"}}</h1>
                 <ul class="list-group list-group-horizontal justify-content-center">
-                    <li v-for="s in salaries" v-bind:id="s" v-bind:key="s.entity" class="list-group-item">
+                    <li v-for="s in outcome.salaries" v-bind:id="s" v-bind:key="s.entity" class="list-group-item">
                         {{ s.text }}
-                        <div v-bind:class="negotiationSucceeds ? 'bg-success ': 'bg-warning'"
+                        <div v-bind:class="outcome.succeded ? 'bg-success ': 'bg-warning'"
                              class="rounded-circle mx-auto round-div">
                             {{ s.salary }}
                         </div>
@@ -20,7 +20,7 @@
                 </ul>
             </div>
 
-        <weather-widget></weather-widget>
+            <weather-widget></weather-widget>
 
         </outcome-modal>
 
@@ -37,12 +37,9 @@
     import VModal from 'vue-js-modal'
     import Vue from 'vue';
     import WeatherWidget from './WeatherWidget'
+    import negotiationOutcome from '../model/negotiationOutcome.js'
 
     Vue.use(VModal, { componentName: "outcome-modal" });
-
-    function convertToMoney(value) {
-        return value.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
-    };
 
     export default {
         name: "NegotiationOutcome",
@@ -55,40 +52,13 @@
             WeatherWidget
         },
         computed: {
-            employeeMinimum() {
-                return new Number(this.$store.getters.employeeMinimum);
-            },
-            employerMaximum() {
-                return new Number(this.$store.getters.employerMaximum);
-            },
-            negotiationSucceeds() {
-                return this.employeeMinimum <= this.employerMaximum;
-            },
-            salaries() {
-                return this.employeeMinimum.valueOf() === this.employerMaximum.valueOf() ?
-                    [
-                        {
-                            entity: "both",
-                            salary: convertToMoney(this.employerMaximum),
-                            text: "Both parties agreed on a salary!"
-                        }
-                    ] :
-                    [
-                        {
-                            entity: "employee",
-                            salary: convertToMoney(this.employeeMinimum),
-                            text: "Employee expects at least"
-                        },
-                        {
-                            entity: "employer",
-                            salary: convertToMoney(this.employerMaximum),
-                            text: "Employer's maximum offer"
-                        },
-                    ]
-            },
             negotiationCompleted() {
                 return this.$store.getters.hasCompleteData;
             },
+            outcome() {
+                return this.negotiationCompleted ?
+                    negotiationOutcome(this.$store.getters.employerMaximum, this.$store.getters.employeeMinimum) : null;
+            }
         },
         methods: {
             beforeClose() {
@@ -115,5 +85,4 @@
     .list-group-item {
         border: none;
     }
-
 </style>

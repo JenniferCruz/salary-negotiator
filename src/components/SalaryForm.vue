@@ -19,6 +19,11 @@
 </template>
 
 <script>
+
+    function getNumericValue(value) {
+        return (Number.parseFloat(value)).valueOf()
+    }
+
     export default {
         name: "SalaryForm",
         data() {
@@ -52,10 +57,11 @@
                 return `${this.name.toLowerCase()}-form`
             },
             errorMessage() {
-                return "Please, enter a numeric value"
+                return getNumericValue(this.amount) < 0 ?
+                    "Salary must be larger or equal to zero" : "Please, enter a numeric value";
             },
             invalidInput() {
-                const n = (Number.parseFloat(this.amount)).valueOf();
+                const n = getNumericValue(this.amount);
                 return Number.isNaN(n) || n < 0;
             },
             otherParty() {

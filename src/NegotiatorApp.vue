@@ -21,14 +21,14 @@
             <employer-form :name="currentTab" placeholder="enter maximum salary"></employer-form>
         </div>
 
-        <negotiation-outcome></negotiation-outcome>
+        <outcome-modal></outcome-modal>
 
     </div>
 </template>
 
 <script>
     import SalaryForm from "./components/SalaryForm.vue";
-    import NegotiationOutcome from "./components/NegotiationOutcome.vue"
+    import OutcomeModal from "./components/OutcomeModal.vue"
 
     export default {
         name: "NegotiatorApp",
@@ -41,7 +41,7 @@
         components: {
             'employer-form': SalaryForm,
             'employee-form': SalaryForm,
-            NegotiationOutcome
+            OutcomeModal
         }
     }
 </script>

@@ -1,10 +1,12 @@
-export function fetchWeather(city) {
-    return fetch(`https://samples.openweathermap.org/data/2.5/find?q=${city}&units=metric`)
+export function fetchLondonWeather() {
+    const key = "51e0de7d6d5faa504d3709c0a6bbced2";
+    return fetch(`http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=${key}&units=metric`)
+        .then(response => response.json())
 }
 
 export function parseMetricData(data) {
     return {
-        city: data.list[0].name,
-        temperature: data.list[0].main.temp
+        city: data.name,
+        temperatureCelsius: data.main.temp
     }
 }

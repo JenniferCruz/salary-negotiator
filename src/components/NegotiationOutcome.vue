@@ -20,10 +20,11 @@
                 </ul>
             </div>
 
-            <div class="text-center mt-3 p-3 border-top">
+            <div class="text-center mt-3 pt-3 border-top alert alert-success">
                 <div v-if="temperature">
-                    <p>Temperature in London: {{ temperature }}</p>
-                    <sub>from the Open Weather Map</sub>
+                    <p>Temperature in London:</p>
+                    <h3>{{ temperature }} °C</h3>
+                    <sub class="text-muted">from the Open Weather Map</sub>
                 </div>
                 <div v-else>
                     <p>Loading Current Temperature in London</p>
@@ -45,6 +46,7 @@
 <script>
     import VModal from 'vue-js-modal'
     import Vue from 'vue';
+    import { fetchLondonWeather, parseMetricData } from "../apis/openweather.js";
 
     Vue.use(VModal, { componentName: "outcome-modal" });
 
@@ -52,11 +54,19 @@
         return value.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
     };
 
+    function fetchLondonTemperature() {
+        return fetchLondonWeather()
+               .then(weather => {
+                   return parseMetricData(weather);
+               }).catch(error => console.log("EEEERRORRR", error));
+    }
+
     export default {
         name: "NegotiationOutcome",
         data() {
             return {
-                modalIsClosed: true
+                modalIsClosed: true,
+                temperature: null,
             }
         },
         computed: {
@@ -94,9 +104,6 @@
             negotiationCompleted() {
                 return this.$store.getters.hasCompleteData;
             },
-            temperature() {
-                return this.$store.getters.London;
-            }
         },
         methods: {
             beforeClose() {
@@ -105,12 +112,11 @@
             beforeOpen() {
                 this.modalIsClosed = false;
             },
-            fetchTemperature() {
-                return this.$store.dispatch("fetchTemperatureInCity", "London")
-            }
         },
         mounted() {
-            this.fetchTemperature();
+            fetchLondonTemperature().then(weather => {
+                this.temperature = weather.temperatureCelsius;
+            })
         }
     }
 </script>

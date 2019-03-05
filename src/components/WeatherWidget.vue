@@ -1,6 +1,6 @@
 <template>
     <div class="text-center mt-3 pt-3 mb-0 border-top alert alert-success">
-        <div v-if="temperature">
+        <div v-if="temperature" id="london-temperature">
             <p>Temperature in London:</p>
             <h3>{{ temperature }} °C</h3>
             <sub class="text-muted">from the Open Weather Map</sub>

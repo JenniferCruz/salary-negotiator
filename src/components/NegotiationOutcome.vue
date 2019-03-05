@@ -1,6 +1,6 @@
 <template>
     <div v-if="outcome" class="text-center">
-        <h1>{{ outcome.succeded ? "Success" : "Failure"}}</h1>
+        <h1 id="negotiation-status">{{ outcome.succeded ? "Success" : "Failure"}}</h1>
         <ul class="list-group list-group-horizontal justify-content-center">
             <li v-for="s in outcome.salaries" v-bind:id="s" v-bind:key="s.entity" class="list-group-item">
                 {{ s.text }}

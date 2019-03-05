@@ -14,11 +14,11 @@
         </ul>
 
         <div v-show="currentTab === 'Employee'">
-            <employee-form :name="currentTab" placeholder="enter minimum salary"></employee-form>
+            <employee-form :name="'Employee'" placeholder="enter minimum salary"></employee-form>
         </div>
 
         <div v-show="currentTab === 'Employer'">
-            <employer-form :name="currentTab" placeholder="enter maximum salary"></employer-form>
+            <employer-form :name="'Employer'" placeholder="enter maximum salary"></employer-form>
         </div>
 
         <outcome-modal></outcome-modal>

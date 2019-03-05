@@ -20,17 +20,7 @@
                 </ul>
             </div>
 
-            <div class="text-center mt-3 pt-3 border-top alert alert-success">
-                <div v-if="temperature">
-                    <p>Temperature in London:</p>
-                    <h3>{{ temperature }} °C</h3>
-                    <sub class="text-muted">from the Open Weather Map</sub>
-                </div>
-                <div v-else>
-                    <p>Loading Current Temperature in London</p>
-                    <div class="spinner-border"></div>
-                </div>
-            </div>
+        <weather-widget></weather-widget>
 
         </outcome-modal>
 
@@ -46,7 +36,7 @@
 <script>
     import VModal from 'vue-js-modal'
     import Vue from 'vue';
-    import { fetchLondonWeather, parseMetricData } from "../apis/openweather.js";
+    import WeatherWidget from './WeatherWidget'
 
     Vue.use(VModal, { componentName: "outcome-modal" });
 
@@ -54,20 +44,15 @@
         return value.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })
     };
 
-    function fetchLondonTemperature() {
-        return fetchLondonWeather()
-               .then(weather => {
-                   return parseMetricData(weather);
-               }).catch(error => console.log("EEEERRORRR", error));
-    }
-
     export default {
         name: "NegotiationOutcome",
         data() {
             return {
                 modalIsClosed: true,
-                temperature: null,
             }
+        },
+        components: {
+            WeatherWidget
         },
         computed: {
             employeeMinimum() {
@@ -113,11 +98,6 @@
                 this.modalIsClosed = false;
             },
         },
-        mounted() {
-            fetchLondonTemperature().then(weather => {
-                this.temperature = weather.temperatureCelsius;
-            })
-        }
     }
 </script>
 

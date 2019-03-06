@@ -19,20 +19,27 @@ describe("App contains two tabs", () => {
 
   it("changes content when new tab is selected", () => {
     // check initial state
-    checkState(2, "employer", true);
-    checkState(1, "employee", false);
+    assertFormIsVisible("employer", 2);
+    assertFormIsHidden("employee", 1);
 
     // select other tab
     wrapper.find("#Employee a").trigger("click");
 
     // check changes in state
-    checkState(2, "employer", false);
-    checkState(1, "employee", true);
+    assertFormIsHidden("employer", 2);
+    assertFormIsVisible("employee", 1);
   });
 
-  function checkState(index, entity, visible) {
+
+  function assertFormIsVisible(entity, index) {
     let tabContent = wrapper.findAll("div").at(index);
     expect(tabContent.contains(`${entity}-form-stub`)).toBeTruthy();
-    expect(tabContent.html().includes("display: none")).toBe(!visible);
+    expect(tabContent.html().includes("display: none")).toBeFalsy();
+  }
+
+  function assertFormIsHidden(entity, index) {
+    let tabContent = wrapper.findAll("div").at(index);
+    expect(tabContent.contains(`${entity}-form-stub`)).toBeTruthy();
+    expect(tabContent.html().includes("display: none")).toBeTruthy();
   }
 });

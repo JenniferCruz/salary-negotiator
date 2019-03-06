@@ -29,10 +29,10 @@
             }
         },
         mounted() {
-            fetchLondonTemperature(
-                degrees => this.temperature = degrees,
-                () => this.error = true // TODO: Want to handle error this way or give more information?
-            )
+            fetchLondonTemperature()
+                .then(degrees => this.temperature = degrees)
+                .catch(() => this.error = true)
+                // TODO: Want to handle error this way or give more information?
         },
     }
 </script>

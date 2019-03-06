@@ -14,12 +14,21 @@
 </template>
 
 <script>
+    import negotiationResult from '../model/negotiationResult.js'
+
     export default {
         name: "NegotiationOutcome",
         props: {
-            outcome: {
-                type: Object
-            },
+            negotiationCompleted: {
+                type: Boolean,
+                default: false
+            }
+        },
+        computed: {
+            outcome() {
+                return this.negotiationCompleted ?
+                    negotiationResult(this.$store.getters.employerMaximum, this.$store.getters.employeeMinimum) : null;
+            }
         },
     }
 </script>

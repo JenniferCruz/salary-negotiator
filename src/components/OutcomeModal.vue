@@ -7,7 +7,7 @@
                 </button>
             </div>
 
-            <negotiation-outcome :outcome="outcome"></negotiation-outcome>
+            <negotiation-outcome :negotiationCompleted="negotiationCompleted"></negotiation-outcome>
 
             <weather-widget></weather-widget>
 
@@ -26,7 +26,6 @@
     import VModal from 'vue-js-modal'
     import Vue from 'vue';
     import WeatherWidget from './WeatherWidget'
-    import negotiationResult from '../model/negotiationResult.js'
     import NegotiationOutcome from './NegotiationOutcome'
 
     Vue.use(VModal, { componentName: "outcome-modal" });
@@ -45,10 +44,6 @@
         computed: {
             negotiationCompleted() {
                 return this.$store.getters.hasCompleteData;
-            },
-            outcome() {
-                return this.negotiationCompleted ?
-                    negotiationResult(this.$store.getters.employerMaximum, this.$store.getters.employeeMinimum) : null;
             }
         },
         methods: {

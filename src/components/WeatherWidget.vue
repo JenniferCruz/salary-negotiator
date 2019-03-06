@@ -30,7 +30,7 @@
         },
         mounted() {
             fetchLondonTemperature()
-                .then(degrees => this.temperature = degrees)
+                .then(weather => this.temperature = weather.temperatureCelsius)
                 .catch(() => this.error = true)
                 // TODO: Want to handle error this way or give more information?
         },

@@ -18,14 +18,7 @@
 </template>
 
 <script>
-    import { fetchLondonWeather, parseMetricData } from "../apis/openweather.js";
-
-    function fetchLondonTemperature() {
-        return fetchLondonWeather()
-            .then(weather => {
-                return parseMetricData(weather);
-            })
-    }
+    import fetchLondonTemperature from "../apis/openweather.js";
 
     export default {
         name: "WeatherWidget",
@@ -36,10 +29,10 @@
             }
         },
         mounted() {
-            fetchLondonTemperature().then(weather => {
-                this.temperature = weather.temperatureCelsius;
-            }).catch(err => this.error = true);
-            // TODO: Want to handle error this way or give more information?
+            fetchLondonTemperature(
+                degrees => this.temperature = degrees,
+                () => this.error = true // TODO: Want to handle error this way or give more information?
+            )
         },
     }
 </script>

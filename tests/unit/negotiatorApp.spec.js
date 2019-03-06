@@ -3,41 +3,36 @@ import NegotiatorApp from "@/NegotiatorApp.vue";
 import { store } from "@/store";
 
 describe("App contains two tabs", () => {
-  it("renders tabs for employer and employee", () => {
-    const wrapper = shallowMount(NegotiatorApp, {
+  let wrapper;
+
+  beforeEach(() => {
+    wrapper = shallowMount(NegotiatorApp, {
       propsData: { store }
     });
+  });
+
+  it("renders tabs for employer and employee", () => {
     const tabs = wrapper.find("#nav-tabs").text().toLowerCase().split(/\s+/);
     const expectedTabs = ["employer", "employee"];
     expect(tabs).toEqual(expect.arrayContaining(expectedTabs));
   });
 
   it("changes content when new tab is selected", () => {
-    const wrapper = shallowMount(NegotiatorApp, {
-      propsData: { store }
-    });
-
     // check initial state
-    let employerContent = wrapper.findAll("div").at(2);
-    expect(employerContent.contains("employer-form-stub")).toBeTruthy();
-    expect(employerContent.html().includes("display: none")).toBeFalsy();
-
-    let employeeContent = wrapper.findAll("div").at(1);
-    expect(employeeContent.contains("employee-form-stub")).toBeTruthy();
-    expect(employeeContent.html().includes("display: none")).toBeTruthy();
-
+    checkState(2, "employer", true);
+    checkState(1, "employee", false);
 
     // select other tab
     wrapper.find("#Employee a").trigger("click");
 
-    // test change in state
-    employerContent = wrapper.findAll("div").at(2);
-    expect(employerContent.contains("employer-form-stub")).toBeTruthy();
-    expect(employerContent.html().includes("display: none")).toBeTruthy();
-
-    employeeContent = wrapper.findAll("div").at(1);
-    expect(employeeContent.contains("employee-form-stub")).toBeTruthy();
-    expect(employeeContent.html().includes("display: none")).toBeFalsy();
-
+    // check changes in state
+    checkState(2, "employer", false);
+    checkState(1, "employee", true);
   });
+
+  function checkState(index, entity, visible) {
+    let tabContent = wrapper.findAll("div").at(index);
+    expect(tabContent.contains(`${entity}-form-stub`)).toBeTruthy();
+    expect(tabContent.html().includes("display: none")).toBe(!visible);
+  }
 });

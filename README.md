@@ -35,7 +35,7 @@ npx cypress run
 
 Alternatively, you can see the tests running on the browser by opening Cypress.
 
-#####Opening Cypress
+##### Opening Cypress
 ```
 npx cypress open
 ```
